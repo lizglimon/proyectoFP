@@ -1,0 +1,33 @@
+#include <stdio.h>
+
+int main(){
+	setvbuf(stdout, NULL, _IONBF, 0);
+	
+	char marco='_';
+	char marco2='|';
+	int i;
+	int salida=1;
+	
+		
+	
+	printf("%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c\n", marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco);
+	printf("|  Jugador 1   	Vidas=3    Puntuacion= 0	|\n");
+
+	printf("|\n 	O       O      O      O     O     O	|\n");
+	printf("|\n 	O       O      O      O     O     O	|\n");
+	printf("|\n 	O       O      O      O     O     O	|\n");
+	printf("|\n 	O       O      O      O     O     O	|\n");
+	printf("|\n 	O       O      O      O     O     O	|\n");
+	printf("|\n 	O       O      O      O     O     O	|\n");
+	for (int i = 0; i < 22; ++i)
+	{
+	printf("%c						%c\n",marco2, marco2);	
+	}
+	printf("			U\n" );
+	printf("%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c\n", marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco,marco,marco,marco, marco);
+	
+	
+	
+
+	return 0;
+}
