@@ -1,0 +1,168 @@
+
+//
+//  main.c
+//
+//
+//  Created by Elizabeth Gomez on 03/12/13.
+//  Copyright (c) 2013 Lucia Elizabeth Gomez. All rights reserved.
+//
+                                        /* Buscaminas */
+
+#include <stdio.h>
+//#include <allegro5/allegro.h>
+#define SIZE 10  //definir el tamanio del arreglo
+
+void imprimir(char [SIZE][SIZE], int); /*Funcion que define el tablero*/
+void inicializarTabla(char [SIZE][SIZE] , int);/*cada lugar dentro del arreglo corresponde a un *  */
+void inicializarTablaReal(char [SIZE][SIZE], int);/*valores que va a contener dentro de cada dato del arreglo*/
+
+void modificarTabla(char, char *, int *, int *);
+
+int main()
+{
+    char tabla[SIZE][SIZE], tablaReal[SIZE][SIZE]; /* Tablero de 9x9 que se muestra al usuario y el tablero real */
+    int fila, columna, estado = 1, camposRestantes = 71; /* primero es en juego, estado es que perdio y 3 es que gano cumplio con los espacios requeridos 9x9=81 -10 bombas =71*/
+    
+    inicializarTablaReal(tablaReal, SIZE);//funcion que da los valors que hay dentro de cada espacio de la matriz
+    inicializarTabla(tabla, SIZE);
+    printf("Buscaminas !\n");
+    printf("Para jugar, escriba la posicion a elegir:\n  Fila enter Columna\n\n");
+    do {
+        imprimir(tabla, SIZE);
+        scanf("%d", &fila);
+        scanf("%d", &columna);
+        if (tabla[fila][columna] == '@')
+            modificarTabla(tablaReal[fila][columna], &tabla[fila][columna], &estado, &camposRestantes);
+        else
+            printf("Ya elegiste ese lugar!\n");/*verificar que los lugaes no se repitan*/
+    } while (estado == 1);
+    if (estado == 3) {
+        imprimir(tabla, SIZE);
+        printf("Ganaste!");
+    }
+    else {
+        imprimir(tabla, SIZE);
+        printf("Perdiste!");
+    }
+    return 0;
+}
+
+void inicializarTabla(char t[SIZE][SIZE] , int size)
+{
+    int i, j;
+    
+    for (i = 1; i <= size-1; i++) {
+        for (j = 1; j <= size-1; j++)
+            t[i][j] = ('@');
+    }
+}
+
+void inicializarTablaReal(char t[SIZE][SIZE], int size)
+{
+    t[1][1] = '1';
+    t[1][2] = '1';
+    t[1][3] = '1';
+    t[1][4] = '1';
+    t[1][5] = '1';
+    t[1][6] = '1';
+    t[1][7] = '1';
+    t[1][8] = '1';
+    t[1][9] = '1';
+    t[2][1] = '1';
+    t[2][2] = '^';
+    t[2][3] = '1';
+    t[2][4] = '1';
+    t[2][5] = '^';
+    t[2][6] = '1';
+    t[2][7] = '1';
+    t[2][8] = '^';
+    t[2][9] = '1';
+    t[3][1] = '1';
+    t[3][2] = '1';
+    t[3][3] = '1';
+    t[3][4] = '2';
+    t[3][5] = '2';
+    t[3][6] = '2';
+    t[3][7] = '1';
+    t[3][8] = '1';
+    t[3][9] = '1';
+    t[4][1] = '0';
+    t[4][2] = '0';
+    t[4][3] = '0';
+    t[4][4] = '1';
+    t[4][5] = '^';
+    t[4][6] = '2';
+    t[4][7] = '1';
+    t[4][8] = '0';
+    t[4][9] = '0';
+    t[5][1] = '0';
+    t[5][2] = '0';
+    t[5][3] = '0';
+    t[5][4] = '1';
+    t[5][5] = '3';
+    t[5][6] = '^';
+    t[5][7] = '2';
+    t[5][8] = '0';
+    t[5][9] = '0';
+    t[6][1] = '1';
+    t[6][2] = '1';
+    t[6][3] = '1';
+    t[6][4] = '0';
+    t[6][5] = '2';
+    t[6][6] = '^';
+    t[6][7] = '3';
+    t[6][8] = '1';
+    t[6][9] = '1';
+    t[7][1] = '1';
+    t[7][2] = '^';
+    t[7][3] = '2';
+    t[7][4] = '1';
+    t[7][5] = '1';
+    t[7][6] = '1';
+    t[7][7] = '2';
+    t[7][8] = '^';
+    t[7][9] = '1';
+    t[8][1] = '1';
+    t[8][2] = '2';
+    t[8][3] = '^';
+    t[8][4] = '2';
+    t[8][5] = '1';
+    t[8][6] = '1';
+    t[8][7] = '1';
+    t[8][8] = '1';
+    t[8][9] = '1';
+    t[9][1] = '^';
+    t[9][2] = '1';
+    t[9][3] = '1';
+    t[9][4] = '2';
+    t[9][5] = '^';
+    t[9][6] = '1';
+    t[9][7] = '0';
+    t[9][8] = '0';
+    t[9][9] = '0';   /*10 bombas*/
+}
+
+void imprimir(char t[SIZE][SIZE] , int size)
+{
+    int i, j; 
+    
+    printf("                              123456789\n");
+    for (i = 1; i <= size-1; i++) {
+        printf("\n%30d ", i);
+        for (j = 1; j <= size-1; j++) 
+            printf("%c", t[i][j]); //sustituye el asterisco por el numero que hay se se elije el lugar
+    }	
+    printf("\n");
+}
+
+void modificarTabla(char campo, char *campoAModificar, int *estado, int *camposRestantes)
+{
+    *campoAModificar = campo;
+    if (campo == '^')
+        *estado = 2;
+    else {
+        --*camposRestantes;
+        if (*camposRestantes == 0)
+            *estado = 3;
+    }
+}
