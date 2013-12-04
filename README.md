@@ -8,9 +8,12 @@ Config
 Allegro5
 
 --------------------
-cd Desktop  //Carpeta con codigo
+cd Desktop 
+
+//Carpeta con codigo
 cd trabajosc
-cd brick //carpeta con archivo .c
+cd brick 
+//carpeta con archivo .c
 
 -----------------------
 definicion de librerias
