@@ -1,0 +1,338 @@
+//
+//  main.c
+//  space1
+//
+//  Created by Elizabeth Gomez on 27/11/13.
+//  Copyright (c) 2013 Lucia Elizabeth Gomez. All rights reserved.
+//
+
+/*#include <stdio.h>
+#include <time.h>
+#include <allegro5/allegro.h>
+#include <allegro5/allegro_image.h>
+//#include "variables.h"
+#define ANCHO 80
+#define ALTO 50
+
+//bitmap * naves;
+BITMAP *load_bitmap(const char *space1, RGB *pal);
+
+// main  ->   navesAlien = load_bitmap("INVADER1.bmp", NULL );
+int tablero [ANCHO][ALTO];
+
+typedef struct
+{
+	int vidas;
+	int puntos;
+	char * nombre;
+	int x;
+	int y;
+}JUGADOR;
+
+typedef struct
+{
+	int x;
+	int y;
+	    ALLEGRO_BITMAP * navesAlien;
+}ENEMIGO;
+
+typedef struct
+{
+	int x;
+	int y;
+}NAVE_ESPECIAL;
+
+typedef struct
+{
+	int x;
+	int y;
+}MURO;
+
+void perderVida (JUGADOR * muerte){
+	muerte->vidas--;
+}
+
+void sumarPuntos(int puntos, int * puntos_jugador){
+	(*puntos_jugador) += puntos;
+}
+
+JUGADOR ingresarJugador(){
+	JUGADOR jugador1;
+	jugador1.nombre=malloc(sizeof(char)*30);
+	jugador1.vidas=3;
+	jugador1.puntos=0;
+	jugador1.x=39;
+	jugador1.y=55;
+	jugador1.nombre="Player One";
+    ALLEGRO_PATH * path = al_get_standard_path(ALLEGRO_RESOURCES_PATH);
+    al_change_directory(al_path_cstr(path, '/'));
+    al_destroy_path(path);
+    jugador1.dibujo = al_load_bitmap("../img/marco.png");
+    if(!jugador1.dibujo) printf("Error fatal");
+
+	return jugador1;
+}
+
+void dibujarJugador(JUGADOR * jugador){
+	tablero[(*jugador).x][jugador->y]= 1 ;
+}
+
+void dibujarTablero(){
+	int i, j;
+	system("cls");
+	for (i = 0 ; i < ANCHO + 2; i++)
+		printf("-");
+	
+	printf("\n");
+	
+	for (i = 0 ; i < ANCHO; i++){
+		printf("|");
+		for (j = 0; i < ALTO; j++)
+			if (tablero[i][j] == 0)
+				printf(" ");
+			else
+				printf("%c", tablero[i][j] );
+        printf("|\n");
+	}
+	for(i=0;i<ANCHO+2;i++)
+		printf("-");
+    
+}
+
+ENEMIGO crearEnemigo()
+{
+	ENEMIGO enemigo1;
+	enemigo1.x=5;
+	enemigo1.y=11;
+    return enemigo1;
+}
+
+void dibujarEnemigo(ENEMIGO * enemigo1){
+	tablero[enemigo1->x][enemigo1->y]=1;
+}
+
+void moverJugador(JUGADOR * jugador, char movimiento){
+	tablero[jugador->x][jugador->y]=0;
+	switch(movimiento){
+		case 'a':
+			if(jugador->y>0)
+				jugador->y--;
+			break;
+		case 'd':
+			if(jugador->y<ALTO-1)
+				jugador->y++;
+			break;
+            
+	}
+}
+
+MURO crearMuro(){
+	MURO muro1;
+	muro1.x=5;
+	muro1.y=45;
+    return muro1;
+}
+
+void dibujarMuro(MURO * muro1){
+	tablero[muro1->x][muro1->y]=3;
+}
+
+
+NAVE_ESPECIAL crearNave(){
+	NAVE_ESPECIAL nave1;
+	nave1.x=79;
+	nave1.y=2;
+    return nave1;
+}
+void dibujarNave(NAVE_ESPECIAL * nave1){
+	tablero[nave1->x][nave1->y]=1;
+}
+
+int main(int argc, const char * argv[])
+{
+    ALLEGRO_DISPLAY *display = NULL;
+    ALLEGRO_EVENT_QUEUE *event_queue = NULL;
+    ALLEGRO_TIMER *timer = NULL;
+    
+	int salida=1;
+    int cnst=1;
+	char opcion= 0;
+	JUGADOR jugador1;
+	ENEMIGO enemigo1;
+	MURO muro1;
+	NAVE_ESPECIAL nave1;
+	jugador1= ingresarJugador();
+	enemigo1= crearEnemigo();
+	muro1= crearMuro();
+	nave1= crearNave();
+	memset (tablero, 0, ANCHO * ALTO);
+   // naves = load_bitmap("INVADER1.bmp", NULL );
+	//vidaNueva(&jugador1.vidas);
+	perderVida(&jugador1);
+	printf("Procesando datos\n");
+	system("cls");
+	sumarPuntos(100, &jugador1.puntos);
+	printf("%s tiene %d vidas y %d puntos", jugador1.nombre, jugador1.vidas, jugador1.puntos);
+	do{
+		scanf("%c", &opcion);
+		fflush(stdin);
+		moverJugador(&jugador1, opcion);
+	}
+	while(cnst==1);
+    dibujarEnemigo(&enemigo1);
+	dibujarTablero();
+	dibujarJugador(&jugador1);
+    return salida;
+}*/
+
+#include <stdio.h>
+#include <allegro5/allegro.h>
+#include <time.h>
+#define WIDTH 20
+#define HEIGHT 20
+int tablero[WIDTH][HEIGHT]; /*Declara el tablero del jugador*/
+typedef struct{ /*Definicion de las estructuras*/
+    int vidas;
+    int puntos;
+    char * nombre;
+    int x;
+    int y;
+}JUGADOR;
+typedef struct{
+    int x;
+    int y;
+}ENEMIGO;
+typedef struct{
+    int x;
+    int y;
+    int tipo;
+}PREMIO;
+void vidaNueva(int * x){/*Incrementa el numero que se mande por parametro*/
+    (*x)++;
+}
+void perderVida(JUGADOR * jugador_que_no_sabe_jugar){/*Resta una vida a un jugador que se manda por parametro*/
+    jugador_que_no_sabe_jugar->vidas--;
+}
+void sumarPuntos(int puntos, int * puntos_jugador){ /*Suma puntos al jugador que se manda por parametro*/
+    (*puntos_jugador) += puntos;
+}
+JUGADOR ingresarJugador(){/*Se crea un nuevo jugador y se le asignan */
+    JUGADOR jugador1;
+    jugador1.nombre = malloc(sizeof(char)*30);
+    jugador1.vidas = 3;
+    jugador1.puntos = 0;
+    jugador1.x = 13;
+    jugador1.y = 13;
+    jugador1.nombre = "Juan";
+    return jugador1;
+}
+void dibujarJugador(JUGADOR * jugador){/*Se dibuja el jugador en su posicion x, y; se le asigna el numero 1 del ascci*/
+    tablero[(*jugador).x][jugador->y] = 1;
+}
+void dibujarTablero(){/*Se dibuja el tablero de juego incluyendo el marco*/
+    int i, j;
+  //  system("cls");
+    for(i = 0; i<WIDTH+2; i++)
+        printf("-");
+    printf("\n");
+    for(i = 0; i<WIDTH; i++){
+        printf("|");
+        for(j = 0; j<HEIGHT; j++)
+            if(tablero[i][j] == 0)
+                printf(" ");
+            else
+                printf("%c", tablero[i][j]);
+        printf("|\n");
+    }
+    for(i = 0; i<WIDTH+2; i++)
+        printf("-");
+}
+ENEMIGO crearEnemigo(){ /*Se crea un nuevo enemigo*/
+    ENEMIGO enemigo1;
+    enemigo1.x = rand()%WIDTH;
+    enemigo1.y = rand()%HEIGHT;
+    return enemigo1;
+}
+PREMIO crearPremio(){ /*Se crea un nuevo premio y se le asigna una posicion*/
+    PREMIO premio1;
+    premio1.x = 3;
+    premio1.y = 13;
+    premio1.tipo = 14;
+    return premio1;
+}
+void dibujarEnemigo(ENEMIGO * enemigo){ /*Dibujar un enemigo en el tablero de juego*/
+    tablero[enemigo->x][enemigo->y] = 3;
+}
+void dibujarPremio(PREMIO * premio){
+    tablero[premio->x][premio->y] = premio->tipo;
+}
+void moverJugador(JUGADOR * jugador, char movimiento){/*Mueve el jugador en una posicion determinada*/
+    tablero[jugador->x][jugador->y] = 0;
+    switch(movimiento){
+        case 'w':
+            if(jugador->x > 0)
+                jugador->x--;
+            break;
+        case 'd':
+            if(jugador->y < HEIGHT-1)
+                jugador->y++;
+            break;
+        case 's':
+            if(jugador->x < WIDTH-1)
+                jugador->x++;
+            break;
+        case 'a':
+            if(jugador->y > 0)
+                jugador->y--;
+            break;
+    }
+}
+int colision(JUGADOR * jugador, ENEMIGO * enemigo){/*Calcula si un enemigo o un jugador estan en la misma posicion */
+    if(jugador->x == enemigo->x && jugador->y == enemigo->y)
+        return 1;
+    return 0;
+}
+int colisionPremio(JUGADOR * jugador, PREMIO * premio1){ /*Calcula si un premio y el jugador estan en la misma posicion, al igual que la funcion anterior si estan
+                                                          en la misma posicion se regresa un 1, de cualquier otra forma se regresa un 0 */
+    return (jugador->x == premio1->x && jugador->y == premio1->y);
+}
+int main(){
+    int salida = 1; /*Nuestra bandera para salir*/
+    char opcion = 0;
+    JUGADOR jugador1; /*Declaramos nuestras sujetos*/
+    PREMIO premio1;
+    ENEMIGO enemigo1;
+    jugador1 = ingresarJugador();
+    enemigo1 = crearEnemigo();
+    premio1 = crearPremio();
+    memset(tablero, 0, 20*20);/*Funcion para asignar 0 a todo el tablero*/
+    vidaNueva(&jugador1.vidas);
+    perderVida(&jugador1);
+    printf("Procesando datos");
+  //  system("cls");
+    sumarPuntos(12, &jugador1.puntos);
+    printf("%s tiene %d vidas y %d puntos\n", jugador1.nombre, jugador1.vidas, jugador1.puntos);
+    do{
+        scanf("%c", &opcion);
+        fflush(stdin);
+        moverJugador(&jugador1, opcion);
+        if(colision(&jugador1, &enemigo1)){
+           system("cls");
+            printf("Kabooom!!!!");
+           // Sleep(1000);
+            salida = 0;
+            continue;
+        }
+        if(colisionPremio(&jugador1, &premio1)){
+            system("cls");
+            printf("Tus puntos son %d\n", ++jugador1.puntos);
+         //   Sleep(1000);
+        }
+        dibujarPremio(&premio1);
+        dibujarEnemigo(&enemigo1);
+        dibujarJugador(&jugador1);
+        dibujarTablero();
+      //  Sleep(1000);
+    }while(salida);
+    return 0;
+}
